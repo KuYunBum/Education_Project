@@ -1,0 +1,110 @@
+	.container_1 {
+		width: 95%;
+		height: 800px;
+		padding-top: 30px;
+		margin: auto;
+	}
+	button {
+		background: white;
+		border: solid 1px;
+	}
+	.btn {
+		background-color: gray;
+		color: white;
+		font-size: 15px;
+/* 		float: right; */
+		height: 35px;
+		margin-right: 10px;
+	}
+	.img_box {
+        width: 370px;
+        height: 200px;
+        float: left;
+        margin-left: 10px;
+        border: 1px solid #bcbcbc;
+        text-align: center;
+        border: solid 0px;
+    }
+    .img_box_img {
+    	border: solid 1px;
+    	width: 140px;
+    	height: 150px;
+    	margin: auto;
+    	margin-bottom: 10px;
+    }
+    .label1 {
+    	width: 120px;
+    	text-align: center;
+    }
+    .label2 {
+    	width: 45px;
+    	text-align: center;
+    }
+    .form-input1{
+    	width: 250px;
+    }
+    .form-input2{
+    	width: 180px;
+    }
+    .form-input3{
+    	width: 100px;
+    }
+    .text-div{
+    	display:flex;
+  		align-items:center;
+  		float: left;
+    }
+    .text-div2{
+    	padding-top: 15px;
+    }
+	input:focus {
+		outline: none;
+	}
+	#cmp_reg_label,
+	#carrier_label,
+	#img_label {
+		padding: 2px;
+		border: solid 1px black;
+	}
+	
+	.modal_wrap1,
+	.modal_wrap2{
+        display: none;
+        width: 500px;
+/*         height: 500px; */
+        position: absolute;
+        top:50%;
+        left: 50%;
+        margin: -250px 0 0 -250px;
+        background:#eee;
+        z-index: 2;
+    }
+    .black_bg1,
+    .black_bg2{
+        display: none;
+        position: absolute;
+        content: "";
+        width: 100%;
+        height: 100%;
+        background-color:rgba(0, 0,0, 0.5);
+        top:0;
+        left: 0;
+        z-index: 1;
+    }
+    .modal_close1,
+    .modal_close2{
+        width: 26px;
+        height: 26px;
+        position: absolute;
+        top: -30px;
+        right: 0;
+    }
+    .modal_close1> a,
+    .modal_close2> a{
+        display: block;
+        width: 100%;
+        height: 100%;
+        background:url(https://img.icons8.com/metro/26/000000/close-window.png);
+        text-indent: -9999px;
+    }
+	

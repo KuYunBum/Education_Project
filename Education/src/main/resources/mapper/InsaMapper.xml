@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.pinosoft.Education.Dao.InsaDao">
+    
+    <insert id="insert">
+    	insert into
+    		pinoinsa_member
+	    		(sabun,name,eng_name,id,pwd,phone,hp,reg_no,email,job_type,years,sex,zip,addr1,addr2,pos_gbn_code,dept_code,salary,
+	    		join_gbn_code,gart_level,put_yn,mil_yn,mil_type,mil_level,mil_startDate,mil_endDate,kosa_reg_yn,kosa_class_code,
+	    		join_day,retire_day,cmp_reg_no,crm_name,cmp_reg_image,self_intro,carrier,carrier_image,profile,profile_image)
+	    	values
+	    		(sabun_seq.nextval,#{name},#{eng_name},#{id},#{pwd},#{phone},#{hp},#{reg_no},#{email},#{job_type},#{years},#{sex},#{zip, jdbcType=VARCHAR},#{addr1},#{addr2},
+	    		#{pos_gbn_code},#{dept_code},#{salary},#{join_gbn_code},#{gart_level},#{put_yn},#{mil_yn},#{mil_type, jdbcType=VARCHAR},#{mil_level, jdbcType=VARCHAR},#{mil_startDate, jdbcType=VARCHAR},
+	    		#{mil_endDate, jdbcType=VARCHAR},#{kosa_reg_yn},#{kosa_class_code, jdbcType=VARCHAR},#{join_day},#{retire_day, jdbcType=VARCHAR},#{cmp_reg_no},#{crm_name},
+	    		#{cmp_reg_image, jdbcType=VARCHAR},#{self_intro},#{carrier, jdbcType=VARCHAR},#{carrier_image, jdbcType=VARCHAR},#{profile, jdbcType=VARCHAR},#{profile_image, jdbcType=VARCHAR})	
+    </insert>
+    
+     <update id="update"> 
+     	update 
+     		pinoinsa_member
+     	set
+     		name=#{name},eng_name=#{eng_name},phone=#{phone},hp=#{hp},reg_no=#{reg_no},email=#{email},job_type=#{job_type},years=#{years},sex=#{sex},
+     		zip=#{zip},addr1=#{addr1},addr2=#{addr2},pos_gbn_code=#{pos_gbn_code},dept_code=#{dept_code},salary=#{salary},
+	    	join_gbn_code=#{join_gbn_code},gart_level=#{gart_level},put_yn=#{put_yn},mil_yn=#{mil_yn},mil_type=#{mil_type, jdbcType=VARCHAR},
+	    	mil_level=#{mil_level, jdbcType=VARCHAR},mil_startDate=#{mil_startDate, jdbcType=VARCHAR},mil_endDate=#{mil_endDate, jdbcType=VARCHAR},
+	    	kosa_reg_yn=#{kosa_reg_yn},kosa_class_code=#{kosa_class_code, jdbcType=VARCHAR},join_day=#{join_day},retire_day=#{retire_day, jdbcType=VARCHAR},
+	    	cmp_reg_no=#{cmp_reg_no},crm_name=#{crm_name},cmp_reg_image=#{cmp_reg_image, jdbcType=VARCHAR},self_intro=#{self_intro},carrier=#{carrier, jdbcType=VARCHAR},
+	    	carrier_image=#{carrier_image, jdbcType=VARCHAR},profile=#{profile, jdbcType=VARCHAR},profile_image=#{profile_image, jdbcType=VARCHAR}
+	    where
+	    	sabun = #{sabun} 
+     </update> 
+    
+	<select id="detail" resultType="com.pinosoft.Education.Dto.InsaDto">
+        SELECT
+       		*
+        FROM
+        	pinoinsa_member
+        WHERE
+        	sabun = #{sabun}
+    </select>    
+    
+    <delete id="delete"> 
+		delete from 
+			pinoinsa_member 
+		where 
+			sabun = #{sabun} 
+	</delete>
+    
+    <select id="idCheck" parameterType="String" resultType="Integer">
+    	select
+    		count(*)
+    	from
+    		pinoinsa_member
+    	where
+    		id = #{id}
+    </select>
+	
+    <sql id='search'>
+		<if test="sabun!=null">
+			and sabun like '%'|| #{sabun}||'%'
+		</if>
+		<if test="name!=null">
+			and name like '%'|| #{name}||'%'
+		</if>
+		<if test="join_gbn_code!=''">
+			and join_gbn_code like #{join_gbn_code, jdbcType=VARCHAR}
+		</if>
+		<if test="put_yn!=''">
+			and put_yn like #{put_yn, jdbcType=VARCHAR}
+		</if>
+		<if test="pos_gbn_code!=''">
+			and pos_gbn_code like #{pos_gbn_code, jdbcType=VARCHAR}
+		</if>
+		<if test="join_day!=''">
+			and to_char(join_day, 'YYYY-MM-DD') like #{join_day, jdbcType=VARCHAR}
+		</if>
+		<if test="retire_day!=''">
+			and to_char(retire_day, 'YYYY-MM-DD') like #{retire_day, jdbcType=VARCHAR}
+		</if>
+		<if test="job_type!=''">
+			and job_type like #{job_type, jdbcType=VARCHAR}
+		</if>
+
+	</sql>
+	
+	<select id="listSearchCriteria" resultType="com.pinosoft.Education.Dto.InsaDto">
+		<![CDATA[select sabun, name, reg_no, phone, pos_gbn_code, put_yn, join_day, retire_day, salary
+				 from (select rownum rn, a.*
+	   				 from (
+				        select pinoinsa_member.* 
+				        from pinoinsa_member 
+				        where 1=1]]> 
+		<include refid="search"/>
+		<![CDATA[order by sabun desc) a where rownum <= #{page}*(#{perPageNum})) b where rn>(#{page}-1)*#{perPageNum}]]> 
+	</select>
+	
+	<select id="listSearchCount" resultType="int">
+		<![CDATA[ select count(sabun) from pinoinsa_member where 1=1 ]]>
+		<include refid="search"/>
+		<![CDATA[ and sabun > 0 ]]>
+	</select>    
+    
+    <select id="selectCom" resultType="com.pinosoft.Education.Dto.InsaComDto">
+    	select * from insa_com order by gubun
+    </select>
+    
+    
+    <select id="selectGrid" resultType="com.pinosoft.Education.Dto.InsaInfoDto">
+    	select * from insa_input_info where sabun = #{sabun}
+    </select>
+</mapper>
